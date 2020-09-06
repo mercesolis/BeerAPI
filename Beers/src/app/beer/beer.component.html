@@ -1,4 +1,4 @@
-<button mat-raised-button color="primary">New Beer</button>
+<button mat-raised-button color="primary" (click)="newBeer()">New Beer</button>
 <mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" align="center" width="100%">
     <ng-container matColumnDef="id">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Id </mat-header-cell>

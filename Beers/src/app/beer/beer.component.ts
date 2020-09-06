@@ -20,6 +20,7 @@ export class BeerComponent implements OnInit {
     'abv'
   ];
 
+  count = 25;
   dataSource: MatTableDataSource<IBeer>;
   @ViewChild(MatSort, {static: true})sort: MatSort;
   @ViewChild(MatPaginator, {static: true})paginator: MatPaginator;
@@ -29,8 +30,20 @@ export class BeerComponent implements OnInit {
     const beers = await this.dataService.getBeers();
 
     this.dataSource = new MatTableDataSource(beers);
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
+    this.dataSource = this.setupDataSource(this.dataSource);
+
+  }
+
+  async newBeer(): Promise<void> {
+    this.dataSource = new MatTableDataSource(await this.dataService.getNewBeer(++this.count));
+    this.dataSource = this.setupDataSource(this.dataSource);
+  }
+
+  setupDataSource(dataSource: MatTableDataSource<IBeer>): MatTableDataSource<IBeer> {
+    dataSource.sort = this.sort;
+    dataSource.paginator = this.paginator;
+
+    return dataSource;
   }
 
 }
